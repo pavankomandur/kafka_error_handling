@@ -12,4 +12,4 @@ spring:
         spring:
           json:
             trusted:
-              packages: com.javatechie.dto
+              packages: com.kafkaerror.dto
