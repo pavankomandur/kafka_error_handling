@@ -18,8 +18,20 @@ public class EventController {
     private KafkaMessagePublisher publisher;
 
 
-    @PostMapping("/publishNew")
-    public ResponseEntity<?> publishEvent(@RequestBody User user) {
+    @PostMapping("/publishUser")
+    public ResponseEntity<?> publishEventforUser(@RequestBody User user) {
+        try {
+            publisher.sendEvents(user);
+            return ResponseEntity.ok("Message published successfully");
+        } catch (Exception exception) {
+            return ResponseEntity.
+                    status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("/publishUsers")
+    public ResponseEntity<?> publishUsers() {
         try {
             List<User> users = CsvReaderUtils.readDataFromCsv();
             users.forEach(usr -> publisher.sendEvents(usr));
